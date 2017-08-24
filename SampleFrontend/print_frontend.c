@@ -228,6 +228,15 @@ gpointer parse_commands(gpointer user_data)
             else
                 printf("Unable to cancel job %s\n", job_id);
         }
+        else if (strcmp(buf, "pickle-printer") == 0)
+        {
+            char printer_id[100];
+            char backend_name[100];
+            char job_id[100];
+            scanf("%s%s", printer_id, backend_name);
+            PrinterObj *p = find_PrinterObj(f, printer_id, backend_name);
+            pickle_printer_to_file(p, "~/.printer-pickle", f);
+        }
     }
 }
 
@@ -255,4 +264,6 @@ void display_help()
     printf("%s\n", "get-current <option name> <printer id> <backend name>");
     printf("%s\n", "add-setting <option name> <option value> <printer id> <backend name>");
     printf("%s\n", "clear-setting <option name> <printer id> <backend name>");
+
+    printf("pickle-printer <printer id> <backend name>\n");
 }

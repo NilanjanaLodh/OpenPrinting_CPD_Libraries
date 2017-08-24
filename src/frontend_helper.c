@@ -465,6 +465,100 @@ gboolean cancel_job(PrinterObj *p, char *job_id)
                                        &status, NULL, NULL);
     return status;
 }
+void pickle_printer_to_file(PrinterObj *p, const char *filename, const FrontendObj *parent_dialog)
+{
+
+    print_backend_call_keep_alive_sync(p->backend_proxy, NULL, NULL);
+    char *path = get_absolute_path(filename);
+    FILE *fp = fopen(path, "w");
+
+    const char *unique_bus_name = g_dbus_connection_get_unique_name(parent_dialog->connection);
+    fprintf(fp, "%s#\n", unique_bus_name);
+    fprintf(fp, "%s#\n", p->backend_name);
+    fprintf(fp, "%s#\n", p->id);
+    fprintf(fp, "%s#\n", p->name);
+    fprintf(fp, "%s#\n", p->location);
+    fprintf(fp, "%s#\n", p->info);
+    fprintf(fp, "%s#\n", p->make_and_model);
+    fprintf(fp, "%s#\n", p->state);
+    fprintf(fp, "%d\n", p->is_accepting_jobs);
+
+    /** Not pickling the Options because it can be reconstructed by querying the backend */
+
+    fprintf(fp, "%d\n", p->settings->count);
+    GHashTableIter iter;
+    gpointer key, value;
+    g_hash_table_iter_init(&iter, p->settings->table);
+    while (g_hash_table_iter_next(&iter, &key, &value))
+    {
+        fprintf(fp, "%s#%s#\n", (char *)key, (char *)value);
+    }
+    fclose(fp);
+    free(path);
+}
+PrinterObj *resurrect_printer_from_file(const char *filename)
+{
+
+    char *path = get_absolute_path(filename);
+    FILE *fp = fopen(path, "r");
+    if (fp == NULL)
+    {
+        free(path);
+        return NULL;
+    }
+
+    PrinterObj *p = get_new_PrinterObj();
+
+    char line[1024];
+
+    fgets(line, 1024, fp);
+    char *previous_parent_dialog = get_string_copy(strtok(line, "#"));
+
+    fgets(line, 1024, fp);
+    p->backend_name = get_string_copy(strtok(line, "#"));
+    char backend_file_name[512];
+    sprintf(backend_file_name, "%s%s", BACKEND_PREFIX, p->backend_name);
+    p->backend_proxy = create_backend_from_file(backend_file_name);
+    print_backend_call_replace_sync(p->backend_proxy, previous_parent_dialog, NULL, NULL);
+
+    fgets(line, 1024, fp);
+    p->id = get_string_copy(strtok(line, "#"));
+
+    fgets(line, 1024, fp);
+    p->name = get_string_copy(strtok(line, "#"));
+
+    fgets(line, 1024, fp);
+    p->location = get_string_copy(strtok(line, "#"));
+
+    fgets(line, 1024, fp);
+    p->info = get_string_copy(strtok(line, "#"));
+
+    fgets(line, 1024, fp);
+    p->make_and_model = get_string_copy(strtok(line, "#"));
+
+    fgets(line, 1024, fp);
+    p->state = get_string_copy(strtok(line, "#"));
+
+    fscanf(fp, "%d\n", &p->is_accepting_jobs);
+
+    int count;
+    fscanf(fp, "%d\n", &count);
+
+    char *name, *value;
+    while (count--)
+    {
+        fgets(line, 1024, fp);
+        name = strtok(line, "#");
+        value = strtok(NULL, "#");
+        printf("%s  : %s \n", name, value);
+        add_setting(p->settings, name, value);
+    }
+
+    fclose(fp);
+    free(path);
+
+    return p;
+}
 
 /**
 ________________________________________________ Settings __________________________________________

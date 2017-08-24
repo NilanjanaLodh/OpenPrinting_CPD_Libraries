@@ -304,6 +304,25 @@ gboolean clear_setting_from_printer(PrinterObj *p, char *name);
  * FALSE otherwise
  */
 gboolean cancel_job(PrinterObj *p, char *job_id);
+
+/**
+ * Serialize the PrinterObj and save it to a file
+ * This also keeps the respective backend of the printer alive.
+ * 
+ * This PrinterObj* can then be resurrecuted from the file using the
+ * resurrect_printer_from_file() function
+ */
+void pickle_printer_to_file(PrinterObj *p, const char *filename , const FrontendObj* parent_dialog);
+
+/**
+ * Recreates a PrinterObj from its serialized form stored in the given format 
+ * and returns it.
+ * 
+ * @returns
+ * the PrinterObj* if deserialization was succesfull
+ * NULL otherwise
+ */
+PrinterObj *resurrect_printer_from_file(const char *filename);
 /************************************************************************************************/
 /**
 ______________________________________ Settings __________________________________________
@@ -427,7 +446,7 @@ void unpack_job_array(GVariant *var, int num_jobs, Job *jobs, char *backend_name
 void DBG_LOG(const char *msg, int msg_level);
 char *concat(char *printer_id, char *backend_name);
 const char *pwg_to_readable(const char *pwg_media_name);
-const char *readable_to_pwg(const char* readable_media_name);
+const char *readable_to_pwg(const char *readable_media_name);
 /**
  * 'Unpack' (Deserialize) the GVariant returned in get_all_options
  * and fill the Options structure approriately

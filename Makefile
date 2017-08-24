@@ -16,7 +16,7 @@ CPD_FRONT_FLAGS=$(shell pkg-config --cflags --libs CPDFrontend)
 
 all: lib 
 install: install-lib
-test: print_frontend
+test: print_frontend pickle_test
 
 #autogenerate the interface code from xml definition 
 gen: src/backend_interface.c src/frontend_interface.c
@@ -59,6 +59,9 @@ install-lib: src/libCPDBackend.so src/libCPDFrontend.so
 ##compile the sample frontend
 print_frontend: SampleFrontend/print_frontend.c 
 	gcc -g -pg -o $@ $^ $(CPD_FRONT_FLAGS) $(GLIB_FLAGS)
+pickle_test:SampleFrontend/pickle_test.c
+	gcc -g -pg -o $@ $^ $(CPD_FRONT_FLAGS)
+
 
 clean:clean-gen
 	rm -f src/*.so
