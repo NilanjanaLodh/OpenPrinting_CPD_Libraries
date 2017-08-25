@@ -69,7 +69,7 @@ char *get_absolute_path(const char *file_path)
         return NULL;
 
     if (file_path[0] == '/')
-        return (char *)file_path;
+        return get_string_copy(file_path);
 
     if (file_path[0] == '~')
     {

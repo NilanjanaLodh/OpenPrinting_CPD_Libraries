@@ -235,7 +235,7 @@ gpointer parse_commands(gpointer user_data)
             char job_id[100];
             scanf("%s%s", printer_id, backend_name);
             PrinterObj *p = find_PrinterObj(f, printer_id, backend_name);
-            pickle_printer_to_file(p, "~/.printer-pickle", f);
+            pickle_printer_to_file(p, "/tmp/.printer-pickle", f);
         }
     }
 }

@@ -8,6 +8,6 @@ int main(int argc , char **argv)
         printf("Usage : %s filepath_to_print\n", argv[0]);
         exit(EXIT_SUCCESS);
     }
-    PrinterObj *p = resurrect_printer_from_file("~/.printer-pickle");
+    PrinterObj *p = resurrect_printer_from_file("/tmp/.printer-pickle");
     print_file(p, argv[1]);
 }
