@@ -1,6 +1,9 @@
-# CUPS, IPP Backend for Common Print Dialog
+# Frontend and Backend Libraries for Common Print Dialog
 
-This repository contains one of the two components of my Google Summer of Code'17 project with The Linux Foundation, i.e the **CPD libraries** for Frontend and Backend . The other component can be found [here](https://github.com/NilanjanaLodh/OpenPrinting_CUPS_Backend).
+This repository contains one of the two components of my Google Summer of Code'17 project with The Linux Foundation, i.e the **CPD libraries** for Frontend and Backend. The other component can be found [here](https://github.com/NilanjanaLodh/OpenPrinting_CUPS_Backend).
+
+These libraries allow the CPD frontend and backends to communicate with each other over the D-Bus. 
+The Frontend library also provides some extra functionality to deal with Printers, Settings, etc. in a high level manner.
 
 ## Background 
 
@@ -12,7 +15,7 @@ Printing out of desktop applications is managed by many very different dialogs, 
 
 The [Common Printing Dialog](https://wiki.ubuntu.com/CommonPrintingDialog) project aims to solve these problems provide a uniform printing experience on Linux Desktop Environments.
 
-### My contributions**
+### My contributions
 
 I specifically have contributed to the project in the following two ways :
 
