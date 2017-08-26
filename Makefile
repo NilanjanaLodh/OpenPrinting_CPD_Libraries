@@ -7,7 +7,7 @@ CUPS_FLAGS=$(shell cups-config --cflags --libs)
 INSTALL_PATH?=/usr
 ##Libraries
 LIB_INSTALL_PATH=$(INSTALL_PATH)/lib
-HEADER_INSTALL_PATH=$(INSTALL_PATH)/include/cpd-interface-headers
+HEADER_INSTALL_PATH=$(INSTALL_PATH)/include
 PKGCONFIG_PATH=$(LIB_INSTALL_PATH)/pkgconfig
 
 ##The compiler and linker flags for making frontend clients
@@ -51,8 +51,9 @@ src/libCPDFrontend.so: src/backend_interface.o src/frontend_interface.o src/comm
 install-lib: src/libCPDBackend.so src/libCPDFrontend.so
 	mkdir -p $(LIB_INSTALL_PATH)
 	cp src/*.so $(LIB_INSTALL_PATH)
-	mkdir -p $(HEADER_INSTALL_PATH)
-	cp src/*.h $(HEADER_INSTALL_PATH)
+	mkdir -p $(HEADER_INSTALL_PATH)/cpd-interface-headers
+	cp src/*.h $(HEADER_INSTALL_PATH)/cpd-interface-headers
+	mv $(HEADER_INSTALL_PATH)/cpd-interface-headers/CPD*.h $(HEADER_INSTALL_PATH) 
 	mkdir -p $(PKGCONFIG_PATH)
 	cp src/*.pc $(PKGCONFIG_PATH)
 
@@ -66,10 +67,11 @@ pickle_test:SampleFrontend/pickle_test.c
 clean:clean-gen
 	rm -f src/*.so
 	rm -f src/*.o 
-	rm -f print_frontend
-
-uninstall-lib:
-	rm -f -r $(HEADER_INSTALL_PATH)
+	
+uninstall:
+	rm -f -r $(HEADER_INSTALL_PATH)/cpd-interface-headers
+	rm -f $(HEADER_INSTALL_PATH)/CPDBackend.h 
+	rm -f $(HEADER_INSTALL_PATH)/CPDFrontend.h
 	rm -f $(LIB_INSTALL_PATH)/libCPDBackend.so
 	rm -f $(LIB_INSTALL_PATH)/libCPDFrontend.so
 
