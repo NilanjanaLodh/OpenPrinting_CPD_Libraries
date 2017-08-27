@@ -4,7 +4,7 @@
 AC_PREREQ([2.69]) 
 AC_INIT([CPD-LIBRARY],[1.0],[nilanjanalodh@gmail.com]) 
 AM_INIT_AUTOMAKE([-Wall foreign]) 
-AC_CONFIG_SRCDIR([lib/frontend_interface.h]) 
+AC_CONFIG_SRCDIR([lib/frontend_helper.h]) 
 
 # Check for a C compiler 
 AC_PROG_CC 
@@ -29,6 +29,8 @@ AC_FUNC_MALLOC
 AC_CHECK_FUNCS([getcwd])
 
 AC_CONFIG_FILES([Makefile
-                 lib/Makefile])
+                 lib/Makefile
+                 CPDBackend.pc
+                 CPDFrontend.pc])
 
 AC_OUTPUT

@@ -32,3 +32,4 @@ depcomp
 lib/.deps
 libtool
 lib/.libs
+*.pc
