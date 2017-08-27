@@ -45,18 +45,21 @@ I specifically have contributed to the project in the following two ways :
     $ make
     $ sudo make install
 
-This project also includes a sample command line frontend. Compile it the following way:
-
-    $ make test
-
-
-## Testing the library
 
 Use the sample frontend client to check that the library and the installed backends work as expected:
 
-    $ ./print_frontend
+## Testing the library
 
-The list of printers from all your installed backends should start appearing immediately. Type `help` to get the list of all available commands.
+The project also includes a sample command line frontend that you can use to test whether the installed library and print backend work as expected.
+
+    $ cd demo/
+    $ make
+    $ print_frontend
+
+The list of printers from various printers should start appearing automatically. Type `help` to get the list of available commands. Make sure to stop the frontend using the `stop` command only.
+
+The library also provides support for serializing a printer. Use the `pickle-printer` command to serialize it, and run the `pickle_test` executable after that to deserialize and test it.
+    
 
 ## Using the frontend and backend libraries in your code
 
