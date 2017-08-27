@@ -1,0 +1,3 @@
+AUTOMAKE_OPTIONS = foreign
+SUBDIRS = lib
+ACLOCAL_AMFLAGS = '-I m4'
