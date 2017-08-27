@@ -1,3 +1,4 @@
+EXTRA_DIST = demo/*.c demo/Makefile
 AUTOMAKE_OPTIONS = foreign
 SUBDIRS = lib
 ACLOCAL_AMFLAGS = '-I m4'

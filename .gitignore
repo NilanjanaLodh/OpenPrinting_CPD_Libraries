@@ -34,3 +34,4 @@ libtool
 lib/.libs
 *.pc
 *.tar.*
+cpd-library*

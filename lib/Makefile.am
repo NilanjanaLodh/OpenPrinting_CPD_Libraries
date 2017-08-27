@@ -1,3 +1,4 @@
+EXTRA_DIST = interface
 lib_LTLIBRARIES	= libCPDBackend.la libCPDFrontend.la
 libCPDBackend_la_SOURCES = backend_interface.c frontend_interface.c common_helper.c
 libCPDBackend_la_CPPFLAGS  = $(GLIB_CFLAGS)
