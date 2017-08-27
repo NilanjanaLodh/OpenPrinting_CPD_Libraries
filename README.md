@@ -50,11 +50,11 @@ Use the sample frontend client to check that the library and the installed backe
 
 ## Testing the library
 
-The project also includes a sample command line frontend that you can use to test whether the installed library and print backend work as expected.
+The project also includes a sample command line frontend that you can use to test whether the installed library and print backends work as expected.
 
     $ cd demo/
     $ make
-    $ print_frontend
+    $ ./print_frontend
 
 The list of printers from various printers should start appearing automatically. Type `help` to get the list of available commands. Make sure to stop the frontend using the `stop` command only.
 
