@@ -40,6 +40,8 @@ I specifically have contributed to the project in the following two ways :
 ## Build and installation
 
 
+    $ ./autogen
+    $ ./configure
     $ make
     $ sudo make install
 

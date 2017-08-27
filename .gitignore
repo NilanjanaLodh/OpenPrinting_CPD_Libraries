@@ -33,3 +33,4 @@ lib/.deps
 libtool
 lib/.libs
 *.pc
+*.tar.*
