@@ -6,6 +6,8 @@ AC_INIT([CPD-LIBRARY],[1.0],[nilanjanalodh@gmail.com])
 AM_INIT_AUTOMAKE([-Wall foreign]) 
 AC_CONFIG_SRCDIR([lib/frontend_helper.h]) 
 
+: ${CFLAGS=""}
+
 # Check for a C compiler 
 AC_PROG_CC 
 

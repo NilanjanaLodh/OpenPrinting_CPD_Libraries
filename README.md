@@ -44,6 +44,7 @@ I specifically have contributed to the project in the following two ways :
     $ ./configure
     $ make
     $ sudo make install
+    $ sudo ldconfig
 
 
 Use the sample frontend client to check that the library and the installed backends work as expected:
